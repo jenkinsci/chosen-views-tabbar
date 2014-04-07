@@ -1,0 +1,52 @@
+table.chosenTabBar {
+	border-collapse: collapse; 
+	width: 100%;
+}
+
+.chosenTabBar td.commonTab {
+	vertical-align: middle;
+	border: 1px solid #cccccc;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	white-space: nowrap;
+	border-bottom: 1px solid #cccccc;
+}
+
+.chosenTabBar td.gapTab {
+	border-bottom: 1px solid #cccccc;
+}
+
+
+.chosenTabBar td.active {
+	border-top: 2px solid #cccccc;
+	background-color: #f0f0f0;
+	font-weight: bold;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.chosenTabBar .dropDownTab {
+	padding: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.commonTab a {
+	text-decoration: none;
+}
+
+.chosenTabBar .filler {
+	border: none;
+	border-bottom: 1px solid #cccccc;
+	width: 100%;
+}
+
+.chosenTabBar td.commonTab:hover {
+	background-color: #eeeeee;
+}
+
+.chosenTabBar td.dropDownTab .chosen-single {
+	background: none;
+	border-radius: 0px;
+	border-bottom: none;
+}

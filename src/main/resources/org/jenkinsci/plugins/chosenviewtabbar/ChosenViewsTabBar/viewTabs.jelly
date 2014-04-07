@@ -28,44 +28,32 @@ THE SOFTWARE.
 	<script src="${rootURL}/plugin/chosen-view-tabbar/chosen.proto.min.js"/>
 	<script src="${rootURL}/plugin/chosen-view-tabbar/event.simulate.js"/>
 	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-view-tabbar/chosen.min.css" />
+	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-view-tabbar/chosen-tabbar.css" />
   </st:once>
-  <script type="text/javascript">
-    function selectViewOnChange()
-    {
-      var selectViewCurrentView = document.getElementById('selectView');
-      if (selectViewCurrentView != null)
-      {
-        /* selectViewCurrentView.value == ${v.viewUrl} */
-        var selectViewCurrentViewName = selectViewCurrentView.value;
-        if (selectViewCurrentViewName != null )
-        {
-          if (selectViewCurrentViewName.length > 0)
-          {
-            window.location.href = '${rootURL}/' + selectViewCurrentViewName;
-          }
-        }
-      }
-    }
-  </script>
-  <div style="background-color: #f0f0f0; border: solid 1px #bbb; padding: 0.5em; margin-top: 1em;">
-    <select id="selectView">
-      <j:forEach var="view" items="${views}">
-        <option id="${view.viewName}" value="${view.viewUrl}">${view.viewName}
-          <j:if test="${it.dropDownGlobalConfiguration.showJobCount}">(${view.getItems().size()})</j:if>
-        </option>
-      </j:forEach>
-      <j:if test="${currentView.hasPermission(currentView.CREATE)}">
-        <option value="">----------------</option>
-        <option value="${currentView.owner.url}newView">${%New View}</option>
-      </j:if>
-    </select>
-    <script type="text/javascript">
-    	var elementId = '${currentView.viewName}';
-		var selectViewCurrentView = document.getElementById(elementId);
-		if (selectViewCurrentView != null) {
-			selectViewCurrentView.selected = true;
-		}
-    </script>
-    <script src="${rootURL}/plugin/chosen-view-tabbar/chosen-views-tabbar.js"/>
-  </div>
+  <table cellspacing="0" cellpadding="0" class="chosenTabBar">
+  	<tr>
+	  	<td class="noRight dropDownTab">
+		    <select id="selectView">
+		      <j:forEach var="view" items="${views}">
+		        <option id="${view.viewName}" value="${view.viewUrl}">${view.viewName}
+		          <j:if test="${it.dropDownGlobalConfiguration.showJobCount}">(${view.getItems().size()})</j:if>
+		        </option>
+		      </j:forEach>
+		    </select>
+	    </td>
+	    <j:if test="${currentView.hasPermission(currentView.CREATE)}">
+		    <td class="inactive noLeft createNewView commonTab">
+		    	<a name="+" href="${rootURL}/${currentView.owner.url}newView" title="${%New View}">+</a>
+		    </td>
+		</j:if>
+	    <td class="filler"></td>
+    </tr>
+  </table>
+  
+<script type="text/javascript">
+  	var rootURL = '${rootURL}/';
+  	var chosenViewsTabbar_currentViewName = '${currentView.viewName}';
+</script>
+<script src="${rootURL}/plugin/chosen-view-tabbar/chosen-views-tabbar.js"/>  
+    
 </j:jelly>
