@@ -1,0 +1,4 @@
+<div>
+  This plugin adds a view tab bar that presents the view list using the "chosen" (https://github.com/julesjanssen/chosen/)
+  drop down list. This view tab bar is useful when you have too many views that can't fit horizontally in most browsers. 
+</div>
