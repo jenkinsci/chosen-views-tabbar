@@ -37,7 +37,6 @@ THE SOFTWARE.
 		    	<option value="" disabled="disabled" selected="selected">${%Choose another view}</option> 
 		      <j:forEach var="view" items="${views}">
 		        <option id="${view.viewName}" value="${view.viewUrl}">${view.viewName}
-		          <j:if test="${it.dropDownGlobalConfiguration.showJobCount}">(${view.getItems().size()})</j:if>
 		        </option>
 		      </j:forEach>
 		    </select>
@@ -50,10 +49,13 @@ THE SOFTWARE.
 	    <td class="filler"></td>
     </tr>
   </table>
-  
 <script src="${rootURL}/plugin/chosen-view-tabbar/chosen-views-tabbar.js"/>
 <script type="text/javascript">
-	ChosenViewsTabbarModule.init('${it.recentChosenViewsCount}','${currentView.viewName}', '${rootURL}/');
+	var allViews = {};
+	<j:forEach var="view" items="${views}">
+		allViews["${view.viewName}"]="${view.viewUrl}";
+  	</j:forEach>
+	ChosenViewsTabbarModule.init('${it.recentChosenViewsCount}','${currentView.viewName}', '${currentView.viewUrl}', '${rootURL}/', allViews);
 </script>
     
 </j:jelly>

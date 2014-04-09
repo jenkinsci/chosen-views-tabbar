@@ -24,18 +24,25 @@ var ChosenViewsTabbarModule = (function () {
 			if (this.recent.length == recentTabLimit)
 				break;
 		}
-		this.recent.sort();
 		
 		this.remember = function(viewName) {
-			if (this.recent.indexOf(viewName)!==-1) {
-				this.recent.splice(this.recent.indexOf(viewName),1);
-			}
+			this.forget(viewName);
 			this.recent.push(viewName)
 			if (this.recent.length > recentTabLimit) {
 				this.recent.splice(0,1);
 			}
 			
 			localStorage.chosenViewsTabbar_recentTabs=this.recent.join()
+		}
+		
+		this.forget = function(viewName) {
+			var viewIndex=this.recent.indexOf(viewName);
+			if (viewIndex!==-1) 
+				this.recent.splice(viewIndex,1);
+		}
+		
+		this.isRecent = function (viewName) {
+			return this.recent.indexOf(viewName) !== -1;
 		}
 		
 		this.getRecent = function() {
@@ -46,12 +53,10 @@ var ChosenViewsTabbarModule = (function () {
 	function selectViewOnChange() {
 		var selectViewCurrentView = document.getElementById('selectView');
 		if (selectViewCurrentView != null) {
-			var selectViewCurrentViewName = selectViewCurrentView.value;
-			if (selectViewCurrentViewName != null) {
-				if (selectViewCurrentViewName.length > 0) {
-					RECENT_CHOSEN_TABS.remember(selectViewCurrentViewName);
-					window.location.href = ROOT_URL + selectViewCurrentViewName;
-				}
+			var selectViewUrl = selectViewCurrentView.value;
+			if (selectViewUrl != null) {
+				if (selectViewUrl.length > 0) 
+					window.location.href = ROOT_URL + selectViewUrl;
 			}
 		}
 	}
@@ -64,12 +69,12 @@ var ChosenViewsTabbarModule = (function () {
 	}
 	
 	var exports = new Object();
-	exports.goToView = function (viewUrl) {
-		RECENT_CHOSEN_TABS.remember(encodeURI(viewUrl))
+	exports.goToView = function (viewName, viewUrl) {
+		RECENT_CHOSEN_TABS.remember(viewName)
 		window.location.href = ROOT_URL+viewUrl
 	}
 	
-	exports.init = function (chosenViewsTabbar_limitOfRecentViews, chosenViewsTabbar_currentViewName, rootUrl) 
+	exports.init = function (chosenViewsTabbar_limitOfRecentViews, chosenViewsTabbar_currentViewName, chosenViewsTabbar_currentViewUrl,rootUrl, allViews) 
 	{
 		ROOT_URL = rootUrl;
 		
@@ -78,20 +83,30 @@ var ChosenViewsTabbarModule = (function () {
 			new Chosen($$("#selectView")[0]);
 			$$("#selectView")[0].observe('change', selectViewOnChange);
 			
-			if (RECENT_CHOSEN_TABS.getRecent().length > 0) {
-				for(index=0; index < RECENT_CHOSEN_TABS.getRecent().length; index++) {
-					var viewName = RECENT_CHOSEN_TABS.getRecent()[index]
-					viewUrl = viewName;
-					viewName = decodeURI(viewName).replace("view/","").replace("/","")
-					var activeClass="inactive";
-					var link = "<a href=\"javascript:ChosenViewsTabbarModule.goToView('"+viewUrl+"')\">"+viewName+"</a>"
-					if (viewName == chosenViewsTabbar_currentViewName) { 
-						activeClass="active";
-						link=viewName;
-					}
-					
-					$$(".dropDownTab")[0].insert({before: "<td class='commonTab "+activeClass+"'>"+link+"</td>"});
-				}	
+			var recent = RECENT_CHOSEN_TABS.getRecent().clone();
+			for(index=0; index < recent.length; index++) {
+				var viewName = recent[index];
+				var viewExists = allViews[recent[index]] != null 
+				if (!viewExists)
+					RECENT_CHOSEN_TABS.forget(viewName);
+			}
+			RECENT_CHOSEN_TABS.remember(chosenViewsTabbar_currentViewName)
+			
+			var recentSorted = RECENT_CHOSEN_TABS.getRecent().clone().sort();
+			for(index=0; index < recentSorted.length; index++) {
+				var viewName = recentSorted[index]
+				var viewUrl = allViews[viewName] 
+				if (viewUrl == null) {
+					continue;
+				}
+				var activeClass="inactive";
+				var link = "<a href=\"javascript:ChosenViewsTabbarModule.goToView('"+viewName+"','"+viewUrl+"')\">"+viewName+"</a>"
+				if (viewName == chosenViewsTabbar_currentViewName) { 
+					activeClass="active";
+					link=viewName;
+				}
+				
+				$$(".dropDownTab")[0].insert({before: "<td class='commonTab "+activeClass+"'>"+link+"</td>"});
 			}
 		});
 	}
