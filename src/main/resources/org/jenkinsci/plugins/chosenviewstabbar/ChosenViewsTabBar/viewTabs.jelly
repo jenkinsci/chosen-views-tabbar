@@ -25,10 +25,10 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" >
   <st:once>
-	<script src="${rootURL}/plugin/chosen-view-tabbar/chosen.proto.min.js"/>
-	<script src="${rootURL}/plugin/chosen-view-tabbar/event.simulate.js"/>
-	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-view-tabbar/chosen.min.css" />
-	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-view-tabbar/chosen-tabbar.css" />
+	<script src="${rootURL}/plugin/chosen-views-tabbar/chosen.proto.min.js"/>
+	<script src="${rootURL}/plugin/chosen-views-tabbar/event.simulate.js"/>
+	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-views-tabbar/chosen.min.css" />
+	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/chosen-views-tabbar/chosen-tabbar.css" />
   </st:once>
   <table cellspacing="0" cellpadding="0" class="chosenTabBar">
   	<tr>
@@ -49,7 +49,7 @@ THE SOFTWARE.
 	    <td class="filler"></td>
     </tr>
   </table>
-<script src="${rootURL}/plugin/chosen-view-tabbar/chosen-views-tabbar.js"/>
+<script src="${rootURL}/plugin/chosen-views-tabbar/chosen-views-tabbar.js"/>
 <script type="text/javascript">
 	var allViews = {};
 	<j:forEach var="view" items="${views}">
