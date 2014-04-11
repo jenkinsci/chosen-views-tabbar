@@ -1,6 +1,7 @@
 var ChosenViewsTabbarModule = (function () {
 	var ROOT_URL = null;
 	var RECENT_CHOSEN_TABS = null;
+	var exports = new Object();
 	
 	function ChosenTab(name) {
 		this.tabName = name;
@@ -55,10 +56,21 @@ var ChosenViewsTabbarModule = (function () {
 		if (selectViewCurrentView != null) {
 			var selectViewUrl = selectViewCurrentView.value;
 			if (selectViewUrl != null) {
-				if (selectViewUrl.length > 0) 
-					window.location.href = ROOT_URL + selectViewUrl;
+				if (selectViewUrl.length > 0) {
+					redirectWithProgressIndicator(ROOT_URL + selectViewUrl);
+				}
 			}
 		}
+	}
+	
+	function redirectWithProgressIndicator(url) {
+		$$(".viewChangeIndicator")[0].setStyle({display:"inline"});
+		// The following redirection doesn't stop animated gifs
+		var new_form = document.createElement('form');
+		new_form.method = 'GET';
+		new_form.action = url;
+		document.body.appendChild(new_form);
+		new_form.submit();
 	}
 	
 	function selectCurrentView(elementId) {
@@ -68,10 +80,10 @@ var ChosenViewsTabbarModule = (function () {
 		}	
 	}
 	
-	var exports = new Object();
 	exports.goToView = function (viewName, viewUrl) {
-		RECENT_CHOSEN_TABS.remember(viewName)
-		window.location.href = ROOT_URL+viewUrl
+		if (viewName != null)
+			RECENT_CHOSEN_TABS.remember(viewName)
+		redirectWithProgressIndicator(ROOT_URL+viewUrl)
 	}
 	
 	exports.init = function (chosenViewsTabbar_limitOfRecentViews, chosenViewsTabbar_currentViewName, chosenViewsTabbar_currentViewUrl,rootUrl, allViews) 
@@ -106,7 +118,7 @@ var ChosenViewsTabbarModule = (function () {
 					link=viewName;
 				}
 				
-				$$(".dropDownTab")[0].insert({before: "<td class='commonTab "+activeClass+"'>"+link+"</td>"});
+				$$(".gapTab")[0].insert({before: "<td class='commonTab "+activeClass+"'>"+link+"</td>"});
 			}
 		});
 	}

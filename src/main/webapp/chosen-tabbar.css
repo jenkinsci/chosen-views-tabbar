@@ -14,11 +14,12 @@ table.chosenTabBar {
 
 .chosenTabBar td.gapTab {
 	border-bottom: 1px solid #cccccc;
+	width: .1em;
 }
 
 
 .chosenTabBar td.active {
-	border-top: 3px solid #cccccc;
+	border-top: 1px solid #cccccc;
 	background-color: #f0f0f0;
 	font-weight: bold;
 	border-bottom: 1px solid #f0f0f0;
@@ -26,9 +27,8 @@ table.chosenTabBar {
 
 .chosenTabBar .dropDownTab {
 	padding: 0px;
-	padding-left: 5px;
-	padding-right: 0px;
 	border-bottom: 1px solid #cccccc;
+	text-align: right;
 }
 
 .commonTab a {
@@ -52,4 +52,24 @@ table.chosenTabBar {
 	font-size: 11px;
 	font-style: italic;
 	color: #cccccc;
+	text-align: left;
+}
+
+.chosenTabBar td.dropDownTab .chosen-drop {
+	text-align: left;
+}
+
+.viewChangeIndicator {
+	float: right;
+	margin-top: -1.7em;
+	margin-right: 2em;
+	width: 2em;
+	height: 1.7em;
+	display: none;
+}
+
+@-moz-document url-prefix() {
+	.chosenTabBar td.dropDownTab .chosen-single {
+		margin-top: -1px;
+	}
 }

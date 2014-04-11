@@ -32,6 +32,8 @@ THE SOFTWARE.
   </st:once>
   <table cellspacing="0" cellpadding="0" class="chosenTabBar">
   	<tr>
+  		<td class="noRight gapTab">
+  		</td>
 	  	<td class="noRight dropDownTab">
 		    <select id="selectView">
 		    	<option value="" disabled="disabled" selected="selected">${%Choose another view}</option> 
@@ -40,6 +42,7 @@ THE SOFTWARE.
 		        </option>
 		      </j:forEach>
 		    </select>
+		    <img src="${rootURL}/plugin/chosen-views-tabbar/progress-indicator.gif" class="viewChangeIndicator"/>
 	    </td>
 	    <j:if test="${currentView.hasPermission(currentView.CREATE)}">
 		    <td class="inactive noLeft createNewView commonTab">
