@@ -34,8 +34,8 @@ THE SOFTWARE.
   	<tr>
   		<td class="noRight gapTab">
   		</td>
-	  	<td class="noRight dropDownTab">
-		    <select id="selectView">
+	  	<td class="noRight dropDownTab" title="${%Shortcut:}${it.shortcutToFocusChosen}">
+		    <select id="selectView" title="${%Shortcut:} ${it.shortcutToFocusChosen}">
 		    	<option value="" disabled="disabled" selected="selected">${%Choose another view}</option> 
 		      <j:forEach var="view" items="${views}">
 		        <option id="${view.viewName}" value="${view.viewUrl}">${view.viewName}
@@ -52,13 +52,20 @@ THE SOFTWARE.
 	    <td class="filler"></td>
     </tr>
   </table>
+<script src="${rootURL}/plugin/chosen-views-tabbar/utils.js"/>  
 <script src="${rootURL}/plugin/chosen-views-tabbar/chosen-views-tabbar.js"/>
 <script type="text/javascript">
 	var allViews = {};
 	<j:forEach var="view" items="${views}">
 		allViews["${view.viewName}"]="${view.viewUrl}";
   	</j:forEach>
-	ChosenViewsTabbarModule.init('${it.recentChosenViewsCount}','${currentView.viewName}', '${currentView.viewUrl}', '${rootURL}/', allViews);
+	ChosenViewsTabbarModule.init(
+		'${it.recentChosenViewsCount}',
+		'${it.shortcutToFocusChosen}',
+		'${currentView.viewName}',
+		'${currentView.viewUrl}',
+		'${rootURL}/', 
+		allViews);
 </script>
     
 </j:jelly>

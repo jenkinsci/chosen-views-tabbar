@@ -86,13 +86,29 @@ var ChosenViewsTabbarModule = (function () {
 		redirectWithProgressIndicator(ROOT_URL+viewUrl)
 	}
 	
-	exports.init = function (chosenViewsTabbar_limitOfRecentViews, chosenViewsTabbar_currentViewName, chosenViewsTabbar_currentViewUrl,rootUrl, allViews) 
+	exports.init = function (
+			chosenViewsTabbar_limitOfRecentViews, 
+			chosenViewsTabbar_shortcutToFocusChosen,
+			chosenViewsTabbar_currentViewName, 
+			chosenViewsTabbar_currentViewUrl,
+			rootUrl, 
+			allViews) 
 	{
-		ROOT_URL = rootUrl;
+		if (chosenViewsTabbar_limitOfRecentViews == "")
+			chosenViewsTabbar_limitOfRecentViews = 5;
 		
+		ROOT_URL = rootUrl;
+		var selectView_chosen = new Chosen($$("#selectView")[0],{"search_contains":true});
 		document.observe('dom:loaded', function(evt) {
 			RECENT_CHOSEN_TABS = new RecentChosenTabs(chosenViewsTabbar_limitOfRecentViews);
-			new Chosen($$("#selectView")[0]);
+			if (chosenViewsTabbar_shortcutToFocusChosen != "") {
+				document.observe('keydown', function(event) {
+					var shortcut = chosenViewsTabbar_shortcutToFocusChosen;
+					if (shortcut == getShortcutStringRepresentation(event))
+						selectView_chosen.activate_action();
+				});
+			}
+
 			$$("#selectView")[0].observe('change', selectViewOnChange);
 			
 			var recent = RECENT_CHOSEN_TABS.getRecent().clone();

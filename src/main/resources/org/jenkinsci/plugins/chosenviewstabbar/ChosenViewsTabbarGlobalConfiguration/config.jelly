@@ -1,8 +1,15 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <f:section title="${%Chosen ViewsTabBar Options}">
-    <f:entry title="${%Limit of Recent Views to Show}"  help="/plugin/chosen-view-tabbar/help_limitOfRecentViews.html">
+    <f:entry title="${%Limit of Recent Views to Show}"  help="/plugin/chosen-views-tabbar/help_limitOfRecentViews.html">
 		<f:textbox name="limitOfRecentViews" field="limitOfRecentViews"/>
 	</f:entry>
+	<f:entry title="${%Keyboard shortcut to focus on view selection box}"  help="/plugin/chosen-views-tabbar/help_shortcutToFocusChosen.html">
+		<f:textbox id="shortcutToFocusChosen" name="shortcutToFocusChosen" field="shortcutToFocusChosen"/>
+	</f:entry>
   </f:section>
+
+<script src="${rootURL}/plugin/chosen-views-tabbar/utils.js"/>
+<script src="${rootURL}/plugin/chosen-views-tabbar/chosen-views-tabbar-global.js"/>
+  
 </j:jelly>

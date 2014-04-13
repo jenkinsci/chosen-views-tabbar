@@ -39,6 +39,11 @@ public class ChosenViewsTabBar extends ViewsTabBar {
 			return ChosenViewsTabbarGlobalConfiguration.DEFAULT_RECENT_TABS;
 		return getConfig().getLimitOfRecentViews();
 	}
+	
+	public String getShortcutToFocusChosen() {
+		if (getConfig() == null) return "";
+		return getConfig().getShortcutToFocusChosen();
+	}
 
 
 	private ChosenViewsTabbarGlobalConfiguration getConfig() {
