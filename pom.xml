@@ -7,7 +7,7 @@
 	</parent>
 
 	<artifactId>chosen-views-tabbar</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>hpi</packaging>
 
 	<repositories>
